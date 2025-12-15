@@ -1,3 +1,3 @@
 # Hello there!
 
-mkarchiso -v -r -w /tmp/slashosiso-tmp -o slashosout slashoslive
+mkarchiso -v -r -w slashostmp -o slashosout slashoslive
