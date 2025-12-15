@@ -8,6 +8,6 @@ why does someone else have gdm
 right now, i'm copy'in g the iso file from my school pc to this bigga pc, to test it, sounds exctiting e: )
 
 TODO:
-enable gdm3
-enable autologin
+enable gdm
+fix autologin
 create systemctl with desktop-installer
