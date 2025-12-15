@@ -1,0 +1,21 @@
+{
+    "name": "SlashOSISO Build Env",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "workspaceFolder": "/workspace",
+    // The mounts section binds your project folder from your host machine into the /workspace folder in the container.
+    // This allows you to edit files on your host and build inside the container seamlessly.
+    "mounts": [
+        "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached"
+    ],
+    "customizations": {
+        "vscode": {
+            "settings": {},
+            "extensions": [
+                "ms-vscode.remote-containers"
+            ]
+        }
+    },
+    "postCreateCommand": "echo 'SlashOSISO build environment ready.'"
+}
