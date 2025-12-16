@@ -1,0 +1,11 @@
+NAME=SlashOS
+PRETTY_NAME=SlashOS
+ID=slashos
+BUILD_ID=rolling
+ANSI_COLOR="38;2;29;237;162"
+HOME_URL="https://slashos.github.io/"
+DOCUMENTATION_URL="https://slashos.github.io/wiki"
+SUPPORT_URL="https://slashos.github.io/support"
+BUG_REPORT_URL="https://github.com/SlashOS"
+PRIVACY_POLICY_URL="https://slashos.github.io/"
+LOGO=slashos-logo
