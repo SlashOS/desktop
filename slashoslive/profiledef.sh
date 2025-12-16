@@ -23,3 +23,42 @@ file_permissions=(
   ["/usr/local/bin/Installation_guide"]="0:0:755"
   ["/usr/local/bin/livecd-sound"]="0:0:755"
 )
+
+cleanup_buildroot_os_release() {
+  local base arch target path
+  local candidates=(
+    "${workdir:-}"
+    "${WORKDIR:-}"
+    "${builddir:-}"
+    "${BUILD:-}"
+    "${AIROOTFS_WORKDIR:-}"
+    "${mkarchiso_workdir:-}"
+    "${MKARCHISO_WORKDIR:-}"
+    "${mkarchiso_root:-}"
+    "${ROOT:-}"
+    "${ROOTDIR:-}"
+    "slashostmp"
+    "work"
+    "build"
+  )
+
+  for base in "${candidates[@]}"; do
+    [[ -z "${base}" ]] && continue
+    base="${base%/}"
+    for arch in x86_64 armv7h aarch64 i686; do
+      target="${base}/${arch}/airootfs/usr/lib/os-release"
+      if [[ -f "${target}" ]]; then
+        printf 'Removing leftover os-release from %s\n' "${target}"
+        rm -f "${target}"
+      fi
+    done
+    if [[ -d "${base}" ]]; then
+      while IFS= read -r path; do
+        [[ -n "${path}" ]] || continue
+        rm -f "${path}"
+      done < <(find "${base}" -path '*/airootfs/usr/lib/os-release' -print 2>/dev/null)
+    fi
+  done
+}
+
+cleanup_buildroot_os_release
