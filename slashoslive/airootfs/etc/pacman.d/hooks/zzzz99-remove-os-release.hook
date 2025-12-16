@@ -1,0 +1,11 @@
+# remove from airootfs!
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = slashos-filesystem
+
+[Action]
+Description = remove /usr/lib/os-release before slashos-filesystem unpacks
+When = PreTransaction
+Exec = /usr/bin/rm -f /usr/lib/os-release
