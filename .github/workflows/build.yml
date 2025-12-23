@@ -1,0 +1,61 @@
+name: Build ISO
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 1 * *'  # Monthly on the 1st
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: archlinux:latest
+      options: --privileged
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up environment
+        run: |
+          pacman -Syu --noconfirm
+          pacman -S --noconfirm base-devel git archiso github-cli
+
+      - name: Build ISO
+        run: |
+          mkarchiso -v -r \
+            -w work \
+            -o out \
+            slashoslive
+
+      - name: Generate tag from ISO name
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh auth login --with-token <<< "$GITHUB_TOKEN"
+
+          ISO_FILE=$(find out -name "*.iso" -type f | head -n1)
+          NAME=$(basename "$ISO_FILE" .iso)
+
+          # Split on first dash
+          BASE=${NAME#*-}
+
+          BASE_TAG="v${BASE}"
+          TAG="$BASE_TAG"
+          COUNTER=0
+
+          while gh release view "$TAG" >/dev/null 2>&1; do
+            COUNTER=$((COUNTER + 1))
+            TAG="${BASE_TAG}-${COUNTER}"
+          done
+
+          echo "ISO_FILE=$ISO_FILE" >> "$GITHUB_ENV"
+          echo "TAG=$TAG" >> "$GITHUB_ENV"
+
+      - name: Create GitHub release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_name: ${{ github.repository }}
+          tag: ${{ env.TAG }}
+          body: "SlashOS Desktop ISO"
+          file: ${{ env.ISO_FILE }}
