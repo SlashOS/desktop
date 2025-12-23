@@ -32,8 +32,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh auth login --with-token <<< "$GITHUB_TOKEN"
-
           ISO_FILE=$(find out -name "*.iso" -type f | head -n1)
           NAME=$(basename "$ISO_FILE" .iso)
 
