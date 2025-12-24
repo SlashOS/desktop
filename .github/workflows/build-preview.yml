@@ -33,20 +33,28 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           ISO_FILE=$(find out -name "*.iso" -type f | head -n1)
+          echo "Found ISO file: $ISO_FILE"
+          
           NAME=$(basename "$ISO_FILE" .iso)
-
+          echo "Extracted name: $NAME"
+          
           # Split on first dash
           BASE=${NAME#*-}
-
+          echo "Base after split: $BASE"
+          
           BASE_TAG="v${BASE}-prerelease"
+          echo "Base tag: $BASE_TAG"
+          
           TAG="$BASE_TAG"
           COUNTER=0
-
+          
           while gh release view "$TAG" >/dev/null 2>&1; do
             COUNTER=$((COUNTER + 1))
             TAG="${BASE_TAG}-${COUNTER}"
+            echo "Tag exists, incrementing counter. New tag: $TAG"
           done
-
+          
+          echo "Final tag: $TAG"
           echo "ISO_FILE=$ISO_FILE" >> "$GITHUB_ENV"
           echo "TAG=$TAG" >> "$GITHUB_ENV"
 
