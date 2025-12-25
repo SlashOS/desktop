@@ -48,7 +48,7 @@ jobs:
           TAG="$BASE_TAG"
           COUNTER=0
           
-          while gh release view "$TAG" >/dev/null 2>&1; do
+          while gh release view "$TAG" --repo ${{ github.repository }} >/dev/null 2>&1; do
             COUNTER=$((COUNTER + 1))
             TAG="${BASE_TAG}-${COUNTER}"
             echo "Tag exists, incrementing counter. New tag: $TAG"
