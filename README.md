@@ -14,41 +14,38 @@ Based on the <a href="https://gitlab.archlinux.org/archlinux/archiso/-/tree/mast
 	<a href="#-customization">Customization</a>
 </p>
 
-No magic, no black boxes. This is the source and process that bakes the SlashOS ISO from scratch. Not a template, not a framework—just my real build system, warts and all.
+This is the source and process that bakes the SlashOS ISO from scratch.
 
 ## 🚀 What is this?
 
 *   The real SlashOS build system. This is what actually produces the ISO I use and ship.
-*   Based on [archiso](https://wiki.archlinux.org/title/archiso), but with all my tweaks, overlays, and structure.
-*   Every config, every hook, every overlay—exactly as I use them. Not a demo, not a starter kit.
+*   Uses [archiso](https://wiki.archlinux.org/title/archiso), for easy customization and building.
+*   Releng profile base, with my own packages, configs, and tweaks.
 
 ## 📂 What's Inside
 
 *   `slashoslive/` — Main build root
-		*   `airootfs/` — Your live system's root (add configs, overlays, etc)
-		*   `packages.x86_64` — List of packages to include
+		*   `airootfs/` — Your live system's root (/etc customizations)
+		*   `packages.x86_64` — List of packages to include to the ISO
 		*   `profiledef.sh` — Main archiso profile config
 		*   `efiboot/`, `grub/`, `syslinux/` — Bootloader configs
-		*   `bootstrap_packages` — Early packages for the build process
-		*   `pacman.conf` — Custom package manager config
+		*   `pacman.conf` — Custom package repo config (also in `airootfs/etc/pacman.conf`)
+		*	Systemctl services to enable on boot for SlashOS experience
 
 ## 🛠️ Setup
 
 1.  **Clone this repo**
 2.  **Install archiso** (`sudo pacman -S archiso`)
-3.  **Tweak your configs** (see below)
-4.  **Build your ISO:**
+3.  **Build your ISO:**
 		```sh
 		cd slashoslive
-		sudo mkarchiso -v .
+		sudo mkarchiso -v -r -w work -o out slashoslive
 		```
-5.  **Find your ISO in `out/`**
+4.  **Find your ISO in `out/`**
 
 ## 🧠 How It Works
 
-1.  **Profile Structure:** All customizations live in `airootfs/` (system root overlay), `packages.x86_64` (package list), and bootloader folders.
-2.  **Build:** `mkarchiso` reads `profiledef.sh`, copies overlays, installs packages, and assembles the ISO.
-3.  **Boot:** The resulting ISO boots with your configs, services, and packages—ready to use or install.
+Custom configs and carefully chosen packages work together with automatic systemctl services to deliver the full SlashOS experience.
 
 ## 🔄 Workflow
 
@@ -57,17 +54,9 @@ No magic, no black boxes. This is the source and process that bakes the SlashOS 
 3.  **Test:** Boot the ISO in a VM or on real hardware.
 4.  **Iterate:** Repeat until perfect.
 
-## 🧩 Customization
-
-*   **Add Packages:** Edit `packages.x86_64` (one per line)
-*   **Systemd Units:** Drop custom units in `airootfs/etc/systemd/system/`
-*   **Hooks/Scripts:** Place in `airootfs/usr/local/bin/` and reference from systemd or profile scripts
-*   **Bootloaders:** Edit configs in `efiboot/`, `grub/`, or `syslinux/`
-*   **Pacman Config:** Tweak `pacman.conf` for custom repos or options
-
 ## 🤝 Contributing
 
-If you spot something weird or have a question, feel free to open an issue, but this is mostly just my own build system.
+If you spot something weird or have a question, feel free to open an issue, or even a PR if you have improvements!
 
 ---
-*Just my real build system for SlashOS. Nothing more, nothing less.*
+*Just THE build system for SlashOS. Nothing more, nothing less.*
