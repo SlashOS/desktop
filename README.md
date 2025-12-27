@@ -1,6 +1,6 @@
 
 <p align="center">
-	<img width="300" alt="SlashOS Banner" src="https://github.com/user-attachments/assets/your-banner-image-link-here" />
+	<img width="300" alt="SlashOS Banner" src="https://github.com/user-attachments/assets/4f47363e-0bc1-4fed-b096-18536be121a2" />
 </p>
 
 <h1 align="center">💿 SlashOS Live</h1>
