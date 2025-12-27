@@ -1,8 +1,4 @@
 
-<p align="center">
-	<img width="300" alt="SlashOS Banner" src="https://github.com/user-attachments/assets/4f47363e-0bc1-4fed-b096-18536be121a2" />
-</p>
-
 <h1 align="center">💿 SlashOS Live</h1>
 <p align="center"><b>The actual build system and process I use to make SlashOS. <br><br>
 Based on the <a href="https://gitlab.archlinux.org/archlinux/archiso/-/tree/master/configs/releng">archiso releng profile</a> (the same one used for official Arch ISOs), but with my own twists.</b></p>
