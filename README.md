@@ -7,6 +7,7 @@ Based on the <a href="https://gitlab.archlinux.org/archlinux/archiso/-/tree/mast
 	<a href="#-setup">Setup</a> |
 	<a href="#-how-it-works">How It Works</a> |
 	<a href="#-workflow">Workflow</a> |
+	<a href="#-github-actions">GitHub Actions</a> |
 	<a href="#-customization">Customization</a>
 </p>
 
@@ -49,6 +50,17 @@ Custom configs and carefully chosen packages work together with automatic system
 2.  **Build:** Run `mkarchiso` as above.
 3.  **Test:** Boot the ISO in a VM or on real hardware.
 4.  **Iterate:** Repeat until perfect.
+
+## 🚀 GitHub Actions
+
+This repository includes automated workflows to build the SlashOS ISO using GitHub Actions:
+
+- **Build ISO**: Automatically builds the ISO monthly on the 1st of each month, or can be triggered manually via the "Actions" tab in GitHub. Creates a full release.
+- **Build ISO Preview**: Automatically builds the ISO daily, or can be triggered manually. Creates a prerelease for testing latest changes.
+- Both workflows use an Arch Linux container to run `mkarchiso`, ensuring a clean and reproducible build environment.
+- Upon successful build, they create a new GitHub release (or prerelease) with the ISO file attached, tagged with the version extracted from the ISO name.
+
+This ensures the latest version of SlashOS is always available as a release, without any costs, with daily previews for ongoing development.
 
 ## 🤝 Contributing
 
